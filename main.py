@@ -9,10 +9,10 @@ class VideoHandler(FileSystemEventHandler):
 
     def __init__(self, path):
         self.path = path
-        self.process_existing_files()
+        self.process_existing_files(path)
 
-    def process_existing_files(self):
-        for root, _, files in os.walk(self.path):
+    def process_existing_files(self, directory):
+        for root, _, files in os.walk(directory):
             for file in files:
                 if file.endswith(('.mp4', '.avi', '.mov')):
                     self.transcode_video(os.path.join(root, file))
@@ -49,7 +49,7 @@ class VideoHandler(FileSystemEventHandler):
 
 if __name__ == "__main__":
     path = "/data/files"  # 替换为你要监控的目录
-    event_handler = VideoHandler()
+    event_handler = VideoHandler(path)
     observer = Observer()
     observer.schedule(event_handler, path, recursive=True)
     observer.start()
