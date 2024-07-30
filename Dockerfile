@@ -9,5 +9,7 @@ COPY . /app
 # 设置环境变量
 ENV PATH="/app:${PATH}"
 
+RUN pip install watchdog ffmpeg-python
+
 # 运行主程序
 CMD ["python", "main.py"]
